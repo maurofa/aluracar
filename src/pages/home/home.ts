@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
+import { Component } from '@angular/core';
+import { HttpErrorResponse } from "@angular/common/http";
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 
 import { Carro } from '../../modelos/carro';
-import { HttpErrorResponse } from "@angular/common/http";
 import { CarrosServiceProvider } from "../../providers/carros-service/carros-service";
+import { EscolhaPage } from "../escolha/escolha";
 
 @Component({
   selector: 'page-home',
@@ -46,6 +46,12 @@ export class HomePage {
         }).present();
       }
     );
+  }
+  selecionaCarro(carro: Carro) {
+    console.log(carro);
+    this.navCtrl.push(EscolhaPage.name, {
+      carroSelecionado: carro
+    });
   }
 }
     
