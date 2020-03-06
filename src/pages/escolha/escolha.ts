@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Carro } from "../../modelos/carro";
 import { Acessorio } from "../../modelos/acessorio";
+import { CadastroPage } from "../cadastro/cadastro";
 
 @IonicPage()
 @Component({
@@ -34,4 +35,11 @@ export class EscolhaPage {
       this._precoTotal - preco;
   }
 
+  avancaCadastro() {
+    this.navCtrl.push(CadastroPage.name,
+      {
+        carroSelecionado: this.carro,
+        precoTotal: this._precoTotal
+      });
+  }
 }

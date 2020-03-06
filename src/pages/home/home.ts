@@ -48,7 +48,6 @@ export class HomePage {
     );
   }
   selecionaCarro(carro: Carro) {
-    console.log(carro);
     this.navCtrl.push(EscolhaPage.name, {
       carroSelecionado: carro
     });
