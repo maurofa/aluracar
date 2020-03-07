@@ -5,6 +5,7 @@ import { Carro } from "../../modelos/carro";
 import { AgendamentosServiceProvider } from "../../providers/agendamentos-service/agendamentos-service";
 import { HomePage } from "../home/home";
 import { Agendamento } from "../../modelos/agendamento";
+import { AgendamentoDaoProvider } from "../../providers/agendamento-dao/agendamento-dao";
 
 @IonicPage()
 @Component({
@@ -22,7 +23,8 @@ export class CadastroPage {
   constructor(public navCtrl: NavController,
       public navParams: NavParams,
       private agendamentosService: AgendamentosServiceProvider,
-      private alertCtrl: AlertController) {
+      private alertCtrl: AlertController,
+      private agendamentoDAO: AgendamentoDaoProvider) {
     this.carro = navParams.get('carroSelecionado');
     this.precoTotal = navParams.get('precoTotal');
   }
@@ -46,7 +48,10 @@ export class CadastroPage {
       enderecoCliente: this.endereco,
       emailCliente: this.email,
       modeloCarro: this.carro.nome,
-      precoTotal: this.precoTotal
+      precoTotal: this.precoTotal,
+      confirmado: false,
+      enviado: false,
+      data: this.data
     };
     let alert = this.alertCtrl.create({
       title: 'Aviso',
@@ -60,14 +65,27 @@ export class CadastroPage {
       ]
     });
     let mensagem = '';
-    this.agendamentosService.agenda(agendamento)
+    this.agendamentoDAO.foiAgendado(agendamento)
+      .mergeMap(foiAgendado => {
+        if(foiAgendado) {
+          throw new Error('Agendamento existente!');
+        }
+        return this.agendamentosService.agenda(agendamento);
+      })
+      .mergeMap(valor => {
+        let $retorno = this.agendamentoDAO.salva(agendamento);
+        if(valor instanceof Error) {
+          throw valor;
+        }
+        return $retorno;
+      })
       .finally(() => {
         alert.setSubTitle(mensagem);
         alert.present();
       })
       .subscribe(
         () => mensagem = 'Agendamento Realizado.',
-        err => mensagem = 'Falha no agendamento. Tente novamente mais tarde!'
+        (err: Error) => mensagem = err.message
       );
   }
 
