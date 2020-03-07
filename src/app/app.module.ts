@@ -18,6 +18,8 @@ import { HomePage } from '../pages/home/home';
 import { CarrosServiceProvider } from '../providers/carros-service/carros-service';
 import { AgendamentosServiceProvider } from '../providers/agendamentos-service/agendamentos-service';
 import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento-dao';
+import { LoginPageModule } from '../pages/login/login.module';
+import { UsuariosServiceProvider } from '../providers/usuarios-service/usuarios-service';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento
       name: 'aluracar',
       storeName: 'agendamentos',
       driverOrder: ['indexeddb']
-    })
+    }),
+    LoginPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -45,7 +48,8 @@ import { AgendamentoDaoProvider } from '../providers/agendamento-dao/agendamento
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     CarrosServiceProvider,
     AgendamentosServiceProvider,
-    AgendamentoDaoProvider
+    AgendamentoDaoProvider,
+    UsuariosServiceProvider
   ]
 })
 export class AppModule {}
