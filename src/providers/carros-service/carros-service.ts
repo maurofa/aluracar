@@ -5,7 +5,7 @@ import { Carro } from "../../modelos/carro";
 @Injectable()
 export class CarrosServiceProvider {
 
-  public APIURL = 'http://localhost:8080/api/';
+  public readonly APIURL = 'http://localhost:8080/api/';
   constructor(private http: HttpClient) {
   }
 

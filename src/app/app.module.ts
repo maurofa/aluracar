@@ -5,9 +5,12 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import 'rxjs/add/operator/finally';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { CarrosServiceProvider } from '../providers/carros-service/carros-service';
+import { AgendamentosServiceProvider } from '../providers/agendamentos-service/agendamentos-service';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { CarrosServiceProvider } from '../providers/carros-service/carros-servic
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CarrosServiceProvider
+    CarrosServiceProvider,
+    AgendamentosServiceProvider
   ]
 })
 export class AppModule {}
